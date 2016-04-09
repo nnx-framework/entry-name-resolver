@@ -51,7 +51,6 @@
       "Nnx\\EntryNameResolver\\PhpUnit\\TestData\\": "test/phpunit/_files"
     },
     "classmap": [
-      "./test/phpunit/Bootstrap.php",
       "./test/"
     ]
   }
