@@ -8,7 +8,7 @@ namespace Nnx\EntryNameResolver;
 return [
     'service_manager' => [
         'invokables'         => [
-            EntryNameResolverManager::class => EntryNameResolverManager::class
+            EntryNameResolverManagerInterface::class => EntryNameResolverManager::class
         ],
         'factories'          => [
 

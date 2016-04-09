@@ -108,5 +108,18 @@ class EntryNameResolverChain implements Countable, EntryNameResolverInterface
      */
     public function resolveEntryNameByContext($entryName, $context = null)
     {
+        $resolvers = clone $this->resolvers;
+
+        $result = null;
+        foreach ($resolvers as $resolverItem) {
+            /** @var EntryNameResolverInterface $resolver */
+            $resolver = $resolverItem['instance'];
+            $result = $resolver->resolveEntryNameByContext($entryName, $context);
+            if (null !== $result) {
+                break;
+            }
+        }
+
+        return $result;
     }
 }

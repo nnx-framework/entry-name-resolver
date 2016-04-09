@@ -5,7 +5,6 @@
  */
 namespace Nnx\EntryNameResolver;
 
-use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\ConfigInterface;
 use Zend\ServiceManager\Exception;
@@ -15,16 +14,16 @@ use Zend\ServiceManager\Exception;
  *
  * @package Nnx\EntryNameResolver\EntryNameResolver
  *
- * @method EntryNameResolverInterface get($id)
+ * @method EntryNameResolverInterface get($name, $options = array(), $usePeeringServiceManagers = true)
  */
-class EntryNameResolverManager extends AbstractPluginManager implements ContainerInterface
+class EntryNameResolverManager extends AbstractPluginManager implements EntryNameResolverManagerInterface
 {
     /**
      * Имя секции в конфиги приложения отвечающей за настройки менеджера
      *
      * @var string
      */
-    const CONFIG_KEY = 'nnx_container_entry_name_resolver';
+    const CONFIG_KEY = 'nnx_entry_name_resolver';
 
     /**
      * EntryNameResolverManager constructor.

@@ -10,11 +10,11 @@ use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use Nnx\EntryNameResolver\Module;
 
 /**
- * Class ContainerTest
+ * Class EntryNameResolverIntegrationTest
  *
  * @package Nnx\EntryNameResolver\PhpUnit\Test
  */
-class ContainerTest extends AbstractHttpControllerTestCase
+class EntryNameResolverIntegrationTest extends AbstractHttpControllerTestCase
 {
     /**
      *

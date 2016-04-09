@@ -34,7 +34,7 @@ class Module implements
      *
      * @var string
      */
-    const CONFIG_KEY = 'nnx_entry_name_resolver';
+    const CONFIG_KEY = 'nnx_entry_name_resolver_module_options';
 
     /**
      * Имя модуля
@@ -72,7 +72,7 @@ class Module implements
 
 
         $serviceListener->addServiceManager(
-            EntryNameResolverManager::class,
+            EntryNameResolverManagerInterface::class,
             EntryNameResolverManager::CONFIG_KEY,
             EntryNameResolverProviderInterface::class,
             'getEntryNameResolverConfig'

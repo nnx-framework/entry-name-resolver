@@ -41,8 +41,10 @@ class EntryNameResolverChainFactory implements FactoryInterface, MutableCreation
         $creationOptions = $this->getCreationOptions();
         $options = is_array($creationOptions) ? $creationOptions : [];
 
+        $resolvers = array_key_exists('resolvers', $options) && is_array($options['resolvers']) ? $options['resolvers'] : [];
+
         $chain = new EntryNameResolverChain();
-        foreach ($options as $entryNameResolverConfig) {
+        foreach ($resolvers as $entryNameResolverConfig) {
             if (!is_array($entryNameResolverConfig)) {
                 $errMsg = 'Entry name resolver config is not array';
                 throw new Exception\RuntimeException($errMsg);
@@ -55,17 +57,17 @@ class EntryNameResolverChainFactory implements FactoryInterface, MutableCreation
 
             $name = $entryNameResolverConfig['name'];
 
-            $options = array_key_exists('options', $entryNameResolverConfig) ? $entryNameResolverConfig['options'] : [];
+            $resolverOptions = array_key_exists('options', $entryNameResolverConfig) ? $entryNameResolverConfig['options'] : [];
 
-            if (!is_array($options)) {
+            if (!is_array($resolverOptions)) {
                 $errMsg = 'Resolver options is not array';
                 throw new Exception\RuntimeException($errMsg);
             }
 
             /** @var EntryNameResolverInterface $resolver */
-            $resolver = $serviceLocator->get($name, $options);
+            $resolver = $serviceLocator->get($name, $resolverOptions);
 
-            $priority = array_key_exists('priority', $options) ? (integer)$options['priority'] : EntryNameResolverChain::DEFAULT_PRIORITY;
+            $priority = array_key_exists('priority', $entryNameResolverConfig) ? (integer)$entryNameResolverConfig['priority'] : EntryNameResolverChain::DEFAULT_PRIORITY;
 
             $chain->attach($resolver, $priority);
         }

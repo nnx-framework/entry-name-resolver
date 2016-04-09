@@ -5,7 +5,7 @@
  */
 
 return [
-    'nnx_entry_name_resolver' => [
+    'nnx_entry_name_resolver_module_options' => [
 
     ]
 ];
