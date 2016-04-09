@@ -42,7 +42,7 @@
     },
     "classmap": [
       "./Module.php",
-      "src/"
+      "./src/"
     ]
   },
   "autoload-dev": {
@@ -52,7 +52,7 @@
     },
     "classmap": [
       "./test/phpunit/Bootstrap.php",
-      "test/"
+      "./test/"
     ]
   }
 }
