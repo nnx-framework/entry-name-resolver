@@ -30,7 +30,7 @@ class TestPaths
      */
     public static function getPathToDefaultAppConfig()
     {
-        return  __DIR__ . '/../_files/DefaultApp/application.config.php';
+        return  __DIR__ . '/../files/DefaultApp/application.config.php';
     }
 
     /**
@@ -41,7 +41,7 @@ class TestPaths
      */
     public static function getPathToContextResolverTestServiceDir()
     {
-        return  __DIR__ . '/../_files/ContextResolver/vendor/service/';
+        return  __DIR__ . '/../files/ContextResolver/vendor/service/';
     }
 
 
@@ -53,7 +53,7 @@ class TestPaths
      */
     public static function getPathToContextResolverTestCustomServiceDir()
     {
-        return  __DIR__ . '/../_files/ContextResolver/vendor/custom-service/';
+        return  __DIR__ . '/../files/ContextResolver/vendor/custom-service/';
     }
 
 
@@ -64,6 +64,6 @@ class TestPaths
      */
     public static function getPathToContextResolverAppConfig()
     {
-        return  __DIR__ . '/../_files/ContextResolver/config/application.config.php';
+        return  __DIR__ . '/../files/ContextResolver/config/application.config.php';
     }
 }
