@@ -33,6 +33,7 @@ install:
 
 
 script:
+  - ls  -al ./test/phpunit/files/ContextResolver
   - cat ./vendor/composer/autoload_classmap.php
   - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then ./vendor/bin/phpunit --configuration $TRAVIS_BUILD_DIR/phpunit.xml.travis --coverage-php $TRAVIS_BUILD_DIR/build/logs/coverage/coverage-phpunit.cov; fi
   - if [[ $EXECUTE_TEST_COVERALLS != 'true' ]]; then ./vendor/bin/phpunit --configuration $TRAVIS_BUILD_DIR/phpunit.xml.travis ; fi
