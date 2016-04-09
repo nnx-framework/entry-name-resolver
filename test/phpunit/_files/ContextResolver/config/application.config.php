@@ -5,6 +5,8 @@ use Nnx\EntryNameResolver\PhpUnit\TestData\ContextResolver\Service;
 use Nnx\EntryNameResolver\PhpUnit\TestData\ContextResolver\Custom\Service as CustomService;
 use Nnx\EntryNameResolver\Module;
 use Nnx\ModuleOptions\Module as ModuleOptions;
+
+
 return [
     'modules'                 => [
         ModuleOptions::MODULE_NAME,
