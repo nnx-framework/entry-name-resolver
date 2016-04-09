@@ -25,12 +25,11 @@ cache:
 
 before_install:
   - composer self-update
-  - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then composer require --dev ; fi
-  - if [[ $EXECUTE_TEST_COVERALLS != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
-  - if [[ $DISABLE_ADD_TRAVIS_PHP_INI != 'true' ]]; then phpenv config-add .travis/php.ini || return 0 ; fi
 
 install:
   - travis_retry composer install --no-interaction --ignore-platform-reqs
+  - if [[ $EXECUTE_TEST_COVERALLS != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
+  - if [[ $DISABLE_ADD_TRAVIS_PHP_INI != 'true' ]]; then phpenv config-add .travis/php.ini || return 0 ; fi
 
 script:
   - cat ./vendor/composer/autoload_classmap.php
