@@ -7,7 +7,6 @@ namespace Nnx\EntryNameResolver\Options;
 
 use Zend\Stdlib\AbstractOptions;
 use Nnx\ModuleOptions\ModuleOptionsInterface;
-use Nnx\EntryNameResolver\Options\ModuleOptionsInterface as CurrentModuleOptionsInterface;
 
 
 /**
@@ -15,36 +14,6 @@ use Nnx\EntryNameResolver\Options\ModuleOptionsInterface as CurrentModuleOptions
  *
  * @package Nnx\EntryNameResolver\Options
  */
-class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface, CurrentModuleOptionsInterface
+class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
 {
-    /**
-     * Список резолверов для определения имени "сервиса", исходя из контекста.
-     *
-     * @var array
-     */
-    protected $entryNameResolvers = [];
-
-    /**
-     * @inheritdoc
-     *
-     * @return array
-     */
-    public function getEntryNameResolvers()
-    {
-        return $this->entryNameResolvers;
-    }
-
-    /**
-     * Устанавливает список резолверов для определения имени "сервиса", исходя из контекста.
-     *
-     * @param array $entryNameResolvers
-     *
-     * @return $this
-     */
-    public function setEntryNameResolvers(array $entryNameResolvers = [])
-    {
-        $this->entryNameResolvers = $entryNameResolvers;
-
-        return $this;
-    }
 }

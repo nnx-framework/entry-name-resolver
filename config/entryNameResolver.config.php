@@ -5,15 +5,15 @@
  */
 namespace Nnx\EntryNameResolver;
 
-
 return [
     EntryNameResolverManager::CONFIG_KEY => [
         'invokables'         => [
-            ResolverByClassName::class => ResolverByClassName::class
+
         ],
         'factories'          => [
-            EntryNameResolverChain::class            => EntryNameResolverChainFactory::class,
-            ResolverByMap::class                     => ResolverByMapFactory::class
+            EntryNameResolverChain::class     => EntryNameResolverChainFactory::class,
+            ResolverByModuleContextMap::class => ResolverByModuleContextMapFactory::class,
+            ResolverByClassName::class => ResolverByClassNameFactory::class
         ],
         'abstract_factories' => [
 

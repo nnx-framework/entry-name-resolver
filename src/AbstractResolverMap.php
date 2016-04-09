@@ -6,33 +6,22 @@
 namespace Nnx\EntryNameResolver;
 
 /**
- * Class ResolverByMap
+ * Class AbstractResolverMap
  *
- * @package Nnx\EntryNameResolver\EntryNameResolver
+ * @package Nnx\EntryNameResolver
  */
-class ResolverByMap implements EntryNameResolverInterface
+abstract class AbstractResolverMap implements EntryNameResolverInterface
 {
     /**
      * Карта используемая для определения имени сервиса в зависимости от контекста вызова
      *
      * 'имяСервиса' => [
-     *      'имяМодуля' => 'имяСервисаДляЭтогоМодуля'
+     *      'contextKey' => 'имяСервисаДляЭтогоМодуля'
      * ]
      *
      * @var array
      */
     protected $contextMap = [];
-
-    /**
-     * ResolverByMap constructor.
-     *
-     * @param array $contextMap
-     */
-    public function __construct(array $contextMap = [])
-    {
-        $this->setContextMap($contextMap);
-    }
-
 
     /**
      * @inheritdoc
@@ -44,7 +33,25 @@ class ResolverByMap implements EntryNameResolverInterface
      */
     public function resolveEntryNameByContext($entryName, $context = null)
     {
+        $contextKey = $this->buildContextKey($context);
+
+        $map = $this->getContextMap();
+        $resolvedEntryName = null;
+        if (array_key_exists($entryName, $map) && is_array($map[$entryName]) && array_key_exists($contextKey, $map[$entryName])) {
+            $resolvedEntryName = $map[$entryName][$contextKey];
+        }
+
+        return $resolvedEntryName;
     }
+
+    /**
+     * Преобразует контекст в ключ
+     *
+     * @param $context
+     *
+     * @return mixed
+     */
+    abstract public function buildContextKey($context);
 
     /**
      * Возвращает карту используемую для определения имени сервиса в зависимости от контекста вызова
