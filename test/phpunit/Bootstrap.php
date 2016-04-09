@@ -58,7 +58,7 @@ class Bootstrap
                     'namespaces' => [
                         'Nnx\\EntryNameResolver' => __DIR__ . '/../../src/',
                         __NAMESPACE__ => __DIR__ . '/tests/',
-                        'Nnx\\EntryNameResolver\\PhpUnit\\TestData' => __DIR__ . '/_files'
+                        'Nnx\\EntryNameResolver\\PhpUnit\\TestData' => __DIR__ . '/files'
                     ]
                 ]
             ]);
