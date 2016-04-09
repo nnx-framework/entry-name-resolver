@@ -38,7 +38,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Nnx\\Container\\": "src/"
+      "Nnx\\EntryNameResolver\\": "src/"
     },
     "classmap": [
       "./Module.php",
@@ -47,8 +47,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Nnx\\Container\\PhpUnit\\Test\\": "test/phpunit/tests",
-      "Nnx\\Container\\PhpUnit\\TestData\\": "test/phpunit/_files"
+      "Nnx\\EntryNameResolver\\PhpUnit\\Test\\": "test/phpunit/tests",
+      "Nnx\\EntryNameResolver\\PhpUnit\\TestData\\": "test/phpunit/_files"
     },
     "classmap": [
       "./test/phpunit/Bootstrap.php",
