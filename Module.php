@@ -56,6 +56,7 @@ class Module implements
             throw new Exception\InvalidArgumentException($errMsg);
         }
 
+        
         /** @var ServiceLocatorInterface $sm */
         $sm = $manager->getEvent()->getParam('ServiceManager');
 
