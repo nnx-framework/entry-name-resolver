@@ -10,6 +10,7 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\MutableCreationOptionsInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\MutableCreationOptionsTrait;
+use ReflectionClass;
 
 /**
  * Class EntryNameResolver
@@ -19,6 +20,13 @@ use Zend\ServiceManager\MutableCreationOptionsTrait;
 class EntryNameResolverChainFactory implements FactoryInterface, MutableCreationOptionsInterface
 {
     use MutableCreationOptionsTrait;
+
+    /**
+     * Имя создаваемого класса
+     *
+     * @var string
+     */
+    protected static $defaultChainClassName = EntryNameResolverChain::class;
 
     /**
      * @inheritdoc
@@ -37,13 +45,21 @@ class EntryNameResolverChainFactory implements FactoryInterface, MutableCreation
     {
         /** @var AbstractPluginManager $serviceLocator */
 
-
         $creationOptions = $this->getCreationOptions();
         $options = is_array($creationOptions) ? $creationOptions : [];
 
         $resolvers = array_key_exists('resolvers', $options) && is_array($options['resolvers']) ? $options['resolvers'] : [];
 
-        $chain = new EntryNameResolverChain();
+        $className = array_key_exists('className', $options) ? (string)$options['className'] : static::$defaultChainClassName;
+
+        $r = new ReflectionClass($className);
+        $chain = $r->newInstance();
+
+        if (!$chain instanceof static::$defaultChainClassName) {
+            $errMsg = sprintf('EntryNameResolverChain not implements: %s', static::$defaultChainClassName);
+            throw new Exception\RuntimeException($errMsg);
+        }
+
         foreach ($resolvers as $entryNameResolverConfig) {
             if (!is_array($entryNameResolverConfig)) {
                 $errMsg = 'Entry name resolver config is not array';

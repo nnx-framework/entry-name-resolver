@@ -7,7 +7,15 @@
 Для EntryNameResolverChain существует фабрика(\Nnx\EntryNameResolver\EntryNameResolverChainFactory) позволяющая задать 
 цепочку на основе конфигов.
 
-Пример использования: 
+Через опции можно передать следующие параметры:
+
+Имя параметра|Обязательный|Тип   |Описание
+-------------|------------|------|---------
+resolvers    |нет         |массив|Используется что бы через конфиг, описать цепочку resolver'ов
+className    |нет         |строка|По умолчанию - \Nnx\EntryNameResolver\EntryNameResolverChain, можно задать свое значение, важно что бы указанный класс был потомком \Nnx\EntryNameResolver\EntryNameResolverChain 
+
+
+## Создание цепочки resolver'ов через конфиг
 
 ```php
 
@@ -35,6 +43,8 @@ $entryNameResolverChain = $entryNameResolverManager->get(EntryNameResolverChain:
 
 ```
 
+
+
 При создание экземпляра EntryNameResolverChain с помощью менеджера плагинов EntryNameResolverManagerInterface, необходимо
 вторым аргументом передать массив с настройками.
 
@@ -49,3 +59,35 @@ name         |да          |строка|Имя resolver'a по котором�
 options      |нет         |массив|Массив с настройками resolver'a
 priority     |нет         |число |Приоритет resolver'a в цепочки. Позволяет управлять порядком вызова resolver'ов
 
+
+## Создание с помощью стандартной фабрики, своей реализации EntryNameResolverChain
+
+В случае если необходимо с помощьюь стандартной фабрики, настроить собственную реализацию EntryNameResolverChain, то
+с помощью настройкии **className**, можно указать имя класса, который является наследником \Nnx\EntryNameResolver\EntryNameResolverChain.
+
+```php
+
+/** @var EntryNameResolverManager $entryNameResolverManager */
+$entryNameResolverManager = $this->getServiceLocator()->get(EntryNameResolverManagerInterface::class);
+
+/** @var EntryNameResolverChain $entryNameResolverChain */
+$entryNameResolverChain = $entryNameResolverManager->get(EntryNameResolverChain::class, [
+    'className' => MyEntryNameResolverChain::class,
+    'resolvers' => [
+        [
+            'name' => 'resolverName1',
+            'options' => [],
+            'priority'  => 80
+        ],
+        [
+            'name' => 'resolverName2',
+            'priority'  => 100
+        ],
+        [
+            'name' => 'resolverName3'
+        ],
+
+    ]
+]);
+
+```

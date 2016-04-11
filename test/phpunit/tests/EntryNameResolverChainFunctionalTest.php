@@ -414,4 +414,38 @@ class EntryNameResolverChainFunctionalTest extends AbstractHttpControllerTestCas
         static::assertEquals($expectedSequence, $actualSequence);
         static::assertCount(4, $entryNameResolverChain);
     }
+
+    /**
+     * Проверка ситуации когда,
+     *
+     *
+     * @throws \Zend\Stdlib\Exception\LogicException
+     * @throws \Zend\ServiceManager\Exception\ServiceNotFoundException
+     * @throws \Interop\Container\Exception\NotFoundException
+     * @throws \Interop\Container\Exception\ContainerException
+     */
+    public function testInvalidEntryNameResolverChainClassName()
+    {
+        /** @noinspection PhpIncludeInspection */
+        $this->setApplicationConfig(
+            include TestPaths::getPathToDefaultAppConfig()
+        );
+
+        /** @var EntryNameResolverManagerInterface $entryNameResolverManager */
+        $entryNameResolverManager = $this->getApplicationServiceLocator()->get(EntryNameResolverManagerInterface::class);
+
+        $e = null;
+        try {
+            $entryNameResolverManager->get(EntryNameResolverChain::class, [
+                'className' => \stdClass::class
+            ]);
+        } catch (\Exception $ex) {
+            $e = $ex;
+        }
+
+        static::assertInstanceOf(\Exception::class, $e);
+        $prevException = $e->getPrevious();
+        static::assertInstanceOf(RuntimeException::class, $prevException);
+        static::assertEquals('EntryNameResolverChain not implements: Nnx\EntryNameResolver\EntryNameResolverChain', $prevException->getMessage());
+    }
 }
