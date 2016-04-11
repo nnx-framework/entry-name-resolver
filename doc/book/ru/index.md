@@ -10,6 +10,7 @@
     - [EntryNameResolverChain](entry-name-resolver-chain.md)
     - [ResolverByModuleContextMap](resolver-by-module-context-map.md)
     - [ResolverByClassName](resolver-by-class-name.md)
+    - [EntryNameResolverMirror](entry-name-resolver-mirror.md)
 
     
 

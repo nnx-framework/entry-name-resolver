@@ -8,7 +8,7 @@ namespace Nnx\EntryNameResolver;
 return [
     EntryNameResolverManager::CONFIG_KEY => [
         'invokables'         => [
-
+            EntryNameResolverMirror::class => EntryNameResolverMirror::class
         ],
         'factories'          => [
             EntryNameResolverChain::class     => EntryNameResolverChainFactory::class,
