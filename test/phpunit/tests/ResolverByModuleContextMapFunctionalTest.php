@@ -11,6 +11,9 @@ use Nnx\EntryNameResolver\PhpUnit\TestData\TestPaths;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use Nnx\EntryNameResolver\PhpUnit\TestData\ContextResolver\Custom\Service as CustomService;
 use Nnx\EntryNameResolver\ResolverByModuleContextMap;
+use Nnx\EntryNameResolver\Exception\RuntimeException;
+use Nnx\EntryNameResolver\PhpUnit\TestData\ContextResolver\Custom\Service\Module1\InvalidResolverByModuleContextMap;
+
 
 /**
  * Class ResolverByModuleContextMapFunctionalTest
@@ -82,10 +85,9 @@ class ResolverByModuleContextMapFunctionalTest extends AbstractHttpControllerTes
         $entryNameResolverManager = $this->getApplicationServiceLocator()->get(EntryNameResolverManagerInterface::class);
 
         /** @var ResolverByModuleContextMap $resolverByModuleContextMap */
-        $resolverByModuleContextMap = $entryNameResolverManager->get(ResolverByModuleContextMap::class);
-
-
-        $resolverByModuleContextMap->setContextMap($map);
+        $resolverByModuleContextMap = $entryNameResolverManager->get(ResolverByModuleContextMap::class, [
+            'contextMap' => $map
+        ]);
 
         $actualResolvedEntryName = $resolverByModuleContextMap->resolveEntryNameByContext($entryName, $context);
 
@@ -117,5 +119,39 @@ class ResolverByModuleContextMapFunctionalTest extends AbstractHttpControllerTes
         $resolverByModuleContextMap = $entryNameResolverManager->get(ResolverByModuleContextMap::class);
 
         $resolverByModuleContextMap->resolveEntryNameByContext('test', false);
+    }
+
+    /**
+     * Проверка ситуации когда,
+     *
+     *
+     * @throws \Zend\Stdlib\Exception\LogicException
+     * @throws \Zend\ServiceManager\Exception\ServiceNotFoundException
+     * @throws \Interop\Container\Exception\NotFoundException
+     * @throws \Interop\Container\Exception\ContainerException
+     */
+    public function testInvalidEntryNameResolverChainClassName()
+    {
+        /** @noinspection PhpIncludeInspection */
+        $this->setApplicationConfig(
+            include TestPaths::getPathToContextResolverAppConfig()
+        );
+
+        /** @var EntryNameResolverManagerInterface $entryNameResolverManager */
+        $entryNameResolverManager = $this->getApplicationServiceLocator()->get(EntryNameResolverManagerInterface::class);
+
+        $e = null;
+        try {
+            $entryNameResolverManager->get(ResolverByModuleContextMap::class, [
+                'className' => InvalidResolverByModuleContextMap::class
+            ]);
+        } catch (\Exception $ex) {
+            $e = $ex;
+        }
+
+        static::assertInstanceOf(\Exception::class, $e);
+        $prevException = $e->getPrevious();
+        static::assertInstanceOf(RuntimeException::class, $prevException);
+        static::assertEquals('ResolverByModuleContextMap not implements: Nnx\EntryNameResolver\ResolverByModuleContextMap', $prevException->getMessage());
     }
 }

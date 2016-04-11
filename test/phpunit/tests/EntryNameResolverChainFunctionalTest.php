@@ -416,7 +416,7 @@ class EntryNameResolverChainFunctionalTest extends AbstractHttpControllerTestCas
     }
 
     /**
-     * Проверка ситуации когда,
+     * Проверка ситуации когда, при создание фабрики, указан некорректный класс резолвера
      *
      *
      * @throws \Zend\Stdlib\Exception\LogicException

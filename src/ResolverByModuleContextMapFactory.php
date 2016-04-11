@@ -11,6 +11,9 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\MutableCreationOptionsInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\MutableCreationOptionsTrait;
+use ReflectionClass;
+
+
 
 /**
  * Class ResolverByMapFactory
@@ -22,11 +25,19 @@ class ResolverByModuleContextMapFactory implements FactoryInterface, MutableCrea
     use MutableCreationOptionsTrait;
 
     /**
+     * Имя создаваемого класса
+     *
+     * @var string
+     */
+    protected static $defaultTargetClassName = ResolverByModuleContextMap::class;
+
+    /**
      * @inheritdoc
      *
      * @param ServiceLocatorInterface $serviceLocator
      *
      * @return ResolverByModuleContextMap
+     * @throws \Nnx\EntryNameResolver\Exception\RuntimeException
      *
      * @throws \Zend\ServiceManager\Exception\ServiceNotFoundException
      */
@@ -46,7 +57,16 @@ class ResolverByModuleContextMapFactory implements FactoryInterface, MutableCrea
 
         $contextMap = array_key_exists('contextMap', $options) ? $options['contextMap'] : [];
 
-        $resolverByModuleContextMap = new ResolverByModuleContextMap($moduleOptionsPluginManager);
+        $className = array_key_exists('className', $options) ? (string)$options['className'] : static::$defaultTargetClassName;
+
+        $r = new ReflectionClass($className);
+        $resolverByModuleContextMap = $r->newInstance($moduleOptionsPluginManager);
+
+        if (!$resolverByModuleContextMap instanceof static::$defaultTargetClassName) {
+            $errMsg = sprintf('ResolverByModuleContextMap not implements: %s', static::$defaultTargetClassName);
+            throw new Exception\RuntimeException($errMsg);
+        }
+
         $resolverByModuleContextMap->setContextMap($contextMap);
 
         return $resolverByModuleContextMap;

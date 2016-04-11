@@ -26,7 +26,7 @@ class EntryNameResolverChainFactory implements FactoryInterface, MutableCreation
      *
      * @var string
      */
-    protected static $defaultChainClassName = EntryNameResolverChain::class;
+    protected static $defaultTargetClassName = EntryNameResolverChain::class;
 
     /**
      * @inheritdoc
@@ -50,13 +50,13 @@ class EntryNameResolverChainFactory implements FactoryInterface, MutableCreation
 
         $resolvers = array_key_exists('resolvers', $options) && is_array($options['resolvers']) ? $options['resolvers'] : [];
 
-        $className = array_key_exists('className', $options) ? (string)$options['className'] : static::$defaultChainClassName;
+        $className = array_key_exists('className', $options) ? (string)$options['className'] : static::$defaultTargetClassName;
 
         $r = new ReflectionClass($className);
         $chain = $r->newInstance();
 
-        if (!$chain instanceof static::$defaultChainClassName) {
-            $errMsg = sprintf('EntryNameResolverChain not implements: %s', static::$defaultChainClassName);
+        if (!$chain instanceof static::$defaultTargetClassName) {
+            $errMsg = sprintf('EntryNameResolverChain not implements: %s', static::$defaultTargetClassName);
             throw new Exception\RuntimeException($errMsg);
         }
 
