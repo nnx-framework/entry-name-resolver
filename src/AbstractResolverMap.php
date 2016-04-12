@@ -33,6 +33,9 @@ abstract class AbstractResolverMap implements EntryNameResolverInterface
      */
     public function resolveEntryNameByContext($entryName, $context = null)
     {
+        if (null === $context) {
+            return null;
+        }
         $contextKey = $this->buildContextKey($context);
 
         $map = $this->getContextMap();
