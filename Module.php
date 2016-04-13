@@ -21,7 +21,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 /**
  * Class Module
  *
- * @package Nnx\EntryNameResolverOptions
+ * @package Nnx\EntryNameResolver
  */
 class Module implements
     BootstrapListenerInterface,
