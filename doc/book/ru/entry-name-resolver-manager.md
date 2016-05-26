@@ -1,10 +1,9 @@
 # Менеджер для получения Resolver'ов
 
 Модуль предоставляет менеджер плагинов для работы с resolver'ами. Данный менеджер зарегистрирован в ServiceLocator приложения
-по имение \Nnx\EntryNameResolver\EntryNameResolverManagerInterface.
+по имени \Nnx\EntryNameResolver\EntryNameResolverManagerInterface.
 
-Для добавления новых resolver'ов можно воспользоваться секцией в конфиге приложения - nnx_entry_name_resolver, либо
-реализовав у модуля интерфейс \Nnx\EntryNameResolver\EntryNameResolverProviderInterface.
+Для добавления новых resolver'ов можно воспользоваться секцией nnx_entry_name_resolverв конфиге приложения, либо реализовав у модуля интерфейс \Nnx\EntryNameResolver\EntryNameResolverProviderInterface.
 
 Пример получения менеджера:
 
@@ -15,4 +14,4 @@ $entryNameResolverManager = $this->getServiceLocator()->get(EntryNameResolverMan
 
 ```
 
-** По умолчанию каждый раз создается новый экземпляр resolver'а**
+По умолчанию каждый раз создается новый экземпляр resolver'а.
