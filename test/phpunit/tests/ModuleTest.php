@@ -20,6 +20,7 @@ use Zend\ModuleManager\ModuleEvent;
  */
 class ModuleTest extends AbstractHttpControllerTestCase
 {
+
     /**
      * Установка окружения
      *
